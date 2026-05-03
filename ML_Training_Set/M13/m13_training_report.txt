@@ -1,0 +1,333 @@
+[00:58:15] M13 Training Report — Dual-Model Upgraded
+[00:58:15] Started  : 2026-05-02T00:58:15.998253
+[00:58:15] Features : 57
+[00:58:15] ==============================================================
+[00:58:15] Loading data from Ollama_DataGathering\data\final\github_actions_training_dataset.jsonl...
+[01:10:30]   Total file rows  : 21,874
+[01:10:30]   Loaded           : 21,874
+[01:10:30]   Real rows        : 19,374
+[01:10:30]   Synthetic        : 2,500  (weight=0.6)
+[01:10:30]   Skipped label    : 0
+[01:10:30]   Skipped text     : 0
+[01:10:30]   Skipped feat     : 0
+[01:10:30]   Label distribution:
+[01:10:30]     compilation             4,431  ( 20.3%)
+[01:10:30]     test_failure            9,154  ( 41.8%)
+[01:10:30]     flaky_test              1,913  (  8.7%)
+[01:10:30]     configuration           3,374  ( 15.4%)
+[01:10:30]     infrastructure          3,002  ( 13.7%)
+[01:10:30] 
+Splitting: 80% train / 20% held-out test (stratified)...
+[01:10:30]   Train : 17,499  Test : 4,375
+[01:10:30]   Test label distribution:
+[01:10:30]     compilation              886
+[01:10:30]     test_failure           1,831
+[01:10:30]     flaky_test               383
+[01:10:30]     configuration            675
+[01:10:30]     infrastructure           600
+[01:10:30] 
+Validation split for model selection / guardrail tuning:
+[01:10:30]   Fit : 14,874  Val : 2,625
+[01:10:30] 
+Features : 57
+[01:10:30]   Test counts + timing + frameworks : 13
+[01:10:30]   Original keyword + disambiguation : 10
+[01:10:30]   Step name                         : 5
+[01:10:30]   Ontology one-hots (incl runtime)  : 6
+[01:10:30]   Strong compile sub-features       : 6
+[01:10:30]   Split config sub-features         : 7
+[01:10:30]   Stage / order                     : 8
+[01:10:30]   Boundary helpers                  : 3
+[01:10:30] 
+==============================================================
+[01:10:30] ABLATION STUDY — primary_label / ontology dependence
+[01:10:30] ==============================================================
+[01:10:31]   full               features=57  accuracy=0.9024  macro_f1=0.9095
+[01:10:32]   no_primary_label   features=51  accuracy=0.7051  macro_f1=0.7111
+[01:10:32]   ontology_only      features= 6  accuracy=0.8683  macro_f1=0.8780
+[01:10:32] Saved ablation results: m13_ablation_results.csv
+[01:10:32] 
+==============================================================
+[01:10:32] MODEL SELECTION + GUARDRAIL TUNING
+[01:10:32] ==============================================================
+[01:10:32] 
+Random Forest 5-fold CV on train set (17,499 rows)...
+[01:10:40] 
+Random Forest — Cross-validation:
+[01:10:40]   test_accuracy             0.8959 ± 0.0077  [0.8814 – 0.9043]
+[01:10:40]   test_f1_macro             0.9041 ± 0.0068  [0.8916 – 0.9114]
+[01:10:40]   test_f1_weighted          0.8981 ± 0.0075  [0.8839 – 0.9062]
+[01:10:40]   train_accuracy            0.9006 ± 0.0017  [0.8988 – 0.9036]
+[01:10:40]   train_f1_macro            0.9088 ± 0.0017  [0.9070 – 0.9117]
+[01:10:40] 
+Training random_forest on fit split for validation selection...
+[01:11:29] 
+random_forest — tuned guardrails on validation
+[01:11:29]   Params      : {'config_to_compile_margin': 0.25, 'config_to_test_margin': 0.2, 'min_alt_proba_for_guardrail': 0.3}
+[01:11:29]   Val accuracy: 0.9040
+[01:11:29]   Val macro F1: 0.9103
+[01:11:30]   random_forest      raw_macro_f1=0.9072  guarded_macro_f1=0.9103
+[01:11:30] 
+Training gradient_boosting on fit split for validation selection...
+[01:11:54] 
+gradient_boosting — tuned guardrails on validation
+[01:11:54]   Params      : {'config_to_compile_margin': 0.18, 'config_to_test_margin': 0.05, 'min_alt_proba_for_guardrail': 0.2}
+[01:11:54]   Val accuracy: 0.9006
+[01:11:54]   Val macro F1: 0.9047
+[01:11:54]   gradient_boosting  raw_macro_f1=0.9034  guarded_macro_f1=0.9047
+[01:11:54] 
+Selected primary model by macro_f1_guardrailed: random_forest
+[01:11:54] Selected guardrail params: {'config_to_compile_margin': 0.25, 'config_to_test_margin': 0.2, 'min_alt_proba_for_guardrail': 0.3}
+[01:11:54] 
+==============================================================
+[01:11:54] SYNTHETIC WEIGHT SWEEP
+[01:11:54] ==============================================================
+[01:11:55]   real_only                rows=15,489  raw_macro_f1=0.9076  guarded_macro_f1=0.9095
+[01:11:56]   synthetic_weight_0.30    rows=17,499  raw_macro_f1=0.9086  guarded_macro_f1=0.9108
+[01:11:56]   synthetic_weight_0.60    rows=17,499  raw_macro_f1=0.9095  guarded_macro_f1=0.9117
+[01:11:57]   synthetic_weight_1.00    rows=17,499  raw_macro_f1=0.9087  guarded_macro_f1=0.9109
+[01:11:57] Saved synthetic sweep: m13_synthetic_weight_sweep.csv
+[01:11:57] 
+==============================================================
+[01:11:57] HELD-OUT TEST SET EVALUATION (4,375 rows)
+[01:11:57] ==============================================================
+[01:11:57] 
+Fitting final random_forest on full train set...
+[01:11:59] 
+random_forest — raw
+[01:11:59]   Accuracy    : 0.8999
+[01:11:59]   F1 macro    : 0.9070
+[01:11:59]   F1 weighted : 0.9018
+[01:11:59] 
+Per-class report:
+[01:11:59]                 precision    recall  f1-score   support
+
+   compilation     0.7454    0.9120    0.8203       886
+ configuration     0.9005    0.8178    0.8571       675
+    flaky_test     0.9870    0.9948    0.9909       383
+infrastructure     0.9568    0.9233    0.9398       600
+  test_failure     0.9586    0.8968    0.9266      1831
+
+      accuracy                         0.8999      4375
+     macro avg     0.9097    0.9089    0.9070      4375
+  weighted avg     0.9087    0.8999    0.9018      4375
+
+[01:11:59] Confusion matrix (rows=actual, cols=predicted):
+[01:11:59]                     pred:compilation  pred:configuration  pred:flaky_test  pred:infrastructure  pred:test_failure
+act:compilation                  808                  36                0                    3                 39
+act:configuration                 98                 552                4                    6                 15
+act:flaky_test                     1                   0              381                    1                  0
+act:infrastructure                23                   6                0                  554                 17
+act:test_failure                 154                  19                1                   15               1642
+[01:11:59] 
+Guardrail changed 15 / 4,375 predictions
+[01:11:59] 
+random_forest — guardrailed
+[01:11:59]   Accuracy    : 0.9026
+[01:11:59]   F1 macro    : 0.9096
+[01:11:59]   F1 weighted : 0.9046
+[01:11:59] 
+Per-class report:
+[01:11:59]                 precision    recall  f1-score   support
+
+   compilation     0.7454    0.9187    0.8231       886
+ configuration     0.9214    0.8163    0.8657       675
+    flaky_test     0.9870    0.9948    0.9909       383
+infrastructure     0.9568    0.9233    0.9398       600
+  test_failure     0.9587    0.9006    0.9288      1831
+
+      accuracy                         0.9026      4375
+     macro avg     0.9139    0.9107    0.9096      4375
+  weighted avg     0.9120    0.9026    0.9046      4375
+
+[01:11:59] Confusion matrix (rows=actual, cols=predicted):
+[01:11:59]                     pred:compilation  pred:configuration  pred:flaky_test  pred:infrastructure  pred:test_failure
+act:compilation                  814                  30                0                    3                 39
+act:configuration                 99                 551                4                    6                 15
+act:flaky_test                     1                   0              381                    1                  0
+act:infrastructure                23                   6                0                  554                 17
+act:test_failure                 155                  11                1                   15               1649
+[01:11:59] 
+Fitting final gradient_boosting on full train set...
+[01:12:15] 
+gradient_boosting — raw
+[01:12:15]   Accuracy    : 0.9072
+[01:12:15]   F1 macro    : 0.9113
+[01:12:15]   F1 weighted : 0.9061
+[01:12:15] 
+Per-class report:
+[01:12:15]                 precision    recall  f1-score   support
+
+   compilation     0.8525    0.8284    0.8403       886
+ configuration     0.9336    0.7911    0.8565       675
+    flaky_test     0.9870    0.9948    0.9909       383
+infrastructure     0.9634    0.9217    0.9421       600
+  test_failure     0.8915    0.9650    0.9268      1831
+
+      accuracy                         0.9072      4375
+     macro avg     0.9256    0.9002    0.9113      4375
+  weighted avg     0.9083    0.9072    0.9061      4375
+
+[01:12:15] Confusion matrix (rows=actual, cols=predicted):
+[01:12:15]                     pred:compilation  pred:configuration  pred:flaky_test  pred:infrastructure  pred:test_failure
+act:compilation                  734                  19                0                    3                130
+act:configuration                 70                 534                4                    5                 62
+act:flaky_test                     0                   0              381                    0                  2
+act:infrastructure                19                   7                0                  553                 21
+act:test_failure                  38                  12                1                   13               1767
+[01:12:15] 
+Guardrail changed 1 / 4,375 predictions
+[01:12:15] 
+gradient_boosting — guardrailed
+[01:12:15]   Accuracy    : 0.9072
+[01:12:15]   F1 macro    : 0.9114
+[01:12:15]   F1 weighted : 0.9062
+[01:12:15] 
+Per-class report:
+[01:12:15]                 precision    recall  f1-score   support
+
+   compilation     0.8515    0.8284    0.8398       886
+ configuration     0.9352    0.7911    0.8571       675
+    flaky_test     0.9870    0.9948    0.9909       383
+infrastructure     0.9634    0.9217    0.9421       600
+  test_failure     0.8915    0.9650    0.9268      1831
+
+      accuracy                         0.9072      4375
+     macro avg     0.9257    0.9002    0.9114      4375
+  weighted avg     0.9084    0.9072    0.9062      4375
+
+[01:12:15] Confusion matrix (rows=actual, cols=predicted):
+[01:12:15]                     pred:compilation  pred:configuration  pred:flaky_test  pred:infrastructure  pred:test_failure
+act:compilation                  734                  19                0                    3                130
+act:configuration                 70                 534                4                    5                 62
+act:flaky_test                     0                   0              381                    0                  2
+act:infrastructure                20                   6                0                  553                 21
+act:test_failure                  38                  12                1                   13               1767
+[01:12:15] 
+Default clean-label model: gradient_boosting (saved as m13_model.pkl and m13_model_gb.pkl)
+[01:12:15] High-recall compilation model: random_forest (saved as m13_model_rf.pkl)
+[01:12:15] 
+==============================================================
+[01:12:15] DUAL-MODEL INFERENCE POLICIES
+[01:12:15] ==============================================================
+[01:12:17] 
+==============================================================
+[01:12:17] CALIBRATION — random_forest saved separately
+[01:12:17] ==============================================================
+[01:12:21] 
+random_forest uncalibrated — calibration
+[01:12:21]   Log loss         : 0.2823
+[01:12:21]   Multiclass Brier : 0.1398
+[01:12:21]        bucket  rows  accuracy  avg_confidence
+(-0.001, 0.5]   390  0.382051        0.445276
+   (0.5, 0.6]    90  0.622222        0.547828
+   (0.6, 0.7]   300  0.783333        0.659815
+   (0.7, 0.8]   331  0.858006        0.764377
+   (0.8, 0.9]   599  0.938230        0.860692
+   (0.9, 1.0]  2665  0.994747        0.966929
+[01:12:22] 
+random_forest calibrated — calibration
+[01:12:22]   Log loss         : 0.2870
+[01:12:22]   Multiclass Brier : 0.1372
+[01:12:22]        bucket  rows  accuracy  avg_confidence
+(-0.001, 0.5]   236  0.309322        0.486360
+   (0.5, 0.6]   165  0.496970        0.569160
+   (0.6, 0.7]    34  0.352941        0.647905
+   (0.7, 0.8]    85  0.729412        0.755348
+   (0.8, 0.9]   253  0.794466        0.857170
+   (0.9, 1.0]  3602  0.973348        0.947779
+[01:12:22] 
+random_forest calibrated — raw
+[01:12:22]   Accuracy    : 0.8997
+[01:12:22]   F1 macro    : 0.9064
+[01:12:22]   F1 weighted : 0.9015
+[01:12:22] 
+Per-class report:
+[01:12:22]                 precision    recall  f1-score   support
+
+   compilation     0.7449    0.9029    0.8163       886
+ configuration     0.9016    0.8148    0.8560       675
+    flaky_test     0.9870    0.9948    0.9909       383
+infrastructure     0.9601    0.9217    0.9405       600
+  test_failure     0.9555    0.9022    0.9281      1831
+
+      accuracy                         0.8997      4375
+     macro avg     0.9098    0.9073    0.9064      4375
+  weighted avg     0.9079    0.8997    0.9015      4375
+
+[01:12:22] Confusion matrix (rows=actual, cols=predicted):
+[01:12:22]                     pred:compilation  pred:configuration  pred:flaky_test  pred:infrastructure  pred:test_failure
+act:compilation                  800                  40                0                    3                 43
+act:configuration                 99                 550                4                    5                 17
+act:flaky_test                     1                   0              381                    1                  0
+act:infrastructure                23                   7                0                  553                 17
+act:test_failure                 151                  13                1                   14               1652
+[01:12:23] 
+Guardrail changed 7 / 4,375 predictions
+[01:12:23] 
+random_forest calibrated — guardrailed
+[01:12:23]   Accuracy    : 0.9006
+[01:12:23]   F1 macro    : 0.9074
+[01:12:23]   F1 weighted : 0.9024
+[01:12:23] 
+Per-class report:
+[01:12:23]                 precision    recall  f1-score   support
+
+   compilation     0.7451    0.9074    0.8183       886
+ configuration     0.9104    0.8133    0.8592       675
+    flaky_test     0.9870    0.9948    0.9909       383
+infrastructure     0.9601    0.9217    0.9405       600
+  test_failure     0.9549    0.9028    0.9281      1831
+
+      accuracy                         0.9006      4375
+     macro avg     0.9115    0.9080    0.9074      4375
+  weighted avg     0.9091    0.9006    0.9024      4375
+
+[01:12:23] Confusion matrix (rows=actual, cols=predicted):
+[01:12:23]                     pred:compilation  pred:configuration  pred:flaky_test  pred:infrastructure  pred:test_failure
+act:compilation                  804                  35                0                    3                 44
+act:configuration                100                 549                4                    5                 17
+act:flaky_test                     1                   0              381                    1                  0
+act:infrastructure                23                   7                0                  553                 17
+act:test_failure                 151                  12                1                   14               1653
+[01:12:23] Calibrated RF will be saved as m13_model_rf_calibrated.pkl, not as the default model.
+[01:12:27] 
+Exported error analysis:
+[01:12:27]   all_test_rows                      4,375
+[01:12:27]   errors                             406
+[01:12:27]   compilation_vs_test_errors         168
+[01:12:27]   configuration_vs_compilation_errors 89
+[01:12:27]   low_confidence_or_low_margin       376
+[01:12:27] Saved confusion matrix: m13_confusion_matrix.csv
+[01:12:27] 
+Top 20 feature importances (selected base model):
+[01:12:27]   feat_primary_is_test                   0.2891  ██████████████████████████████████████████████████████████████████████████████████████ [ONTOLOGY]
+[01:12:27]   feat_primary_is_config                 0.1548  ██████████████████████████████████████████████ [ONTOLOGY]
+[01:12:27]   feat_primary_is_infra                  0.1494  ████████████████████████████████████████████ [ONTOLOGY]
+[01:12:27]   feat_primary_is_compile                0.1464  ███████████████████████████████████████████ [ONTOLOGY]
+[01:12:27]   feat_primary_is_flaky                  0.1179  ███████████████████████████████████ [ONTOLOGY]
+[01:12:27]   feat_primary_is_runtime                0.0695  ████████████████████ [ONTOLOGY]
+[01:12:27]   feat_num_tests_skipped                 0.0084  ██
+[01:12:27]   feat_fw_pytest                         0.0078  ██
+[01:12:27]   feat_is_java                           0.0061  █
+[01:12:27]   feat_step_is_setup                     0.0049  █ [STAGE]
+[01:12:27]   feat_has_dependency_install            0.0041  █ [STAGE]
+[01:12:27]   feat_build_duration                    0.0036  █
+[01:12:27]   feat_fw_junit                          0.0032  
+[01:12:27]   feat_error_in_setup_step               0.0032   [STAGE]
+[01:12:27]   feat_error_in_test_step                0.0026   [STAGE]
+[01:12:27]   feat_first_error_before_tests          0.0024   [STAGE]
+[01:12:27]   feat_kw_test_assert                    0.0021   [KEYWORD]
+[01:12:27]   feat_first_error_after_tests_started   0.0021   [STAGE]
+[01:12:27]   feat_error_in_compile_step             0.0020   [STAGE]
+[01:12:27]   feat_config_missing_file               0.0020   [CONFIG]
+[01:12:27] Saved feature importances: m13_feature_importance.csv
+[01:12:29] 
+Saved default clean model alias: m13_model.pkl
+[01:12:29] Saved separate models: m13_model_gb.pkl, m13_model_rf.pkl, m13_model_rf_calibrated.pkl
+[01:12:29] Saved dual-model bundle: m13_model_bundle.pkl
+[01:12:29] Saved encoder/features: m13_label_encoder.pkl, m13_feature_names.pkl
+[01:12:29] Saved metadata: m13_metadata.json
+[01:12:29] Saved metrics: m13_metrics.json
+[01:12:29] Inference options: GB clean labels, RF high-recall compilation, or predict_with_dual_models(..., strategy='hybrid_compile_rescue').
+[01:12:29] Finished : 2026-05-02T01:12:29.628288

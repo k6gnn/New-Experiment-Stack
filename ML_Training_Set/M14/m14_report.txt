@@ -1,0 +1,446 @@
+[12:52:24] M14 Change-aware Proactive Failure Predictor  [v5]
+[12:52:24] Started : 2026-05-03T12:52:24.606796+00:00
+[12:52:24] ==============================================================================
+[12:52:24] Loaded runs        : 34,800
+[12:52:24] Repositories       : 93
+[12:52:24] Overall fail rate  : 0.1261
+[12:52:24] M13 labels present : 1,513
+[12:52:24] M13 coverage       : 4.35%
+[12:52:24] 
+Building training windows...
+[12:52:35] Training windows   : 33,870
+[12:52:35] Window fail rate   : 0.1255
+[12:52:35] Total features     : 54 change-aware | 64 with M13
+[12:52:35] Saved windows to   : m14_training_windows.csv
+[12:52:36] 
+Per-repository chronological split (70 / 15 / 15):
+[12:52:36]   train=23,704  val=5,041  test=5,125
+[12:52:36]   fail rate -- train=0.1234  val=0.1305  test=0.1305
+[12:52:36]   repos -- train=92  val=92  test=92
+[12:52:36] 
+Always-success baseline (not eligible): accuracy=0.8695  precision=0.0000  recall=0.0000  f1=0.0000
+[12:52:36] 
+Training candidates...
+[12:52:37] 
+history_only_gb_weighted
+[12:52:37]   Features: 8  |  Train time: 1.3s
+[12:52:37]   Val thresholds -- balanced=0.650  high_recall=0.275  low_noise=0.700
+[12:52:37]   accuracy              : 0.7795
+[12:52:37]   precision             : 0.3008
+[12:52:37]   recall                : 0.5202
+[12:52:37]   f1                    : 0.3812
+[12:52:37]   fpr                   : 0.1816
+[12:52:37]   roc_auc               : 0.7396
+[12:52:37]   average_precision     : 0.3549
+[12:52:37]   brier                 : 0.2039
+[12:52:37]   Warnings: 1,157  TP=348  FP=809  TN=3647  FN=321
+[12:52:37]   Classification report (per-repo chronological test, balanced thr):
+[12:52:37]                   precision    recall  f1-score   support
+[12:52:37]     
+[12:52:37]                0       0.92      0.82      0.87      4456
+[12:52:37]                1       0.30      0.52      0.38       669
+[12:52:37]     
+[12:52:37]         accuracy                           0.78      5125
+[12:52:37]        macro avg       0.61      0.67      0.62      5125
+[12:52:37]     weighted avg       0.84      0.78      0.80      5125
+[12:52:37]   Confusion matrix [[TN, FP], [FN, TP]]: [[3647, 809], [321, 348]]
+[12:52:37]   Mode=balanced     thr=0.650  p=0.301  r=0.520  f1=0.381  fpr=0.182  warnings=1157
+[12:52:37]   Mode=high_recall  thr=0.275  p=0.201  r=0.839  f1=0.324  fpr=0.501  warnings=2795
+[12:52:37]   Mode=low_noise    thr=0.700  p=0.369  r=0.335  f1=0.351  fpr=0.086  warnings=607
+[12:52:55] 
+change_aware_gb_weighted
+[12:52:55]   Features: 54  |  Train time: 18.2s
+[12:52:55]   Val thresholds -- balanced=0.675  high_recall=0.250  low_noise=0.675
+[12:52:55]   accuracy              : 0.8593
+[12:52:55]   precision             : 0.4696
+[12:52:55]   recall                : 0.6009
+[12:52:55]   f1                    : 0.5272
+[12:52:55]   fpr                   : 0.1019
+[12:52:55]   roc_auc               : 0.8596
+[12:52:55]   average_precision     : 0.5662
+[12:52:55]   brier                 : 0.1476
+[12:52:55]   Warnings: 856  TP=402  FP=454  TN=4002  FN=267
+[12:52:55]   Classification report (per-repo chronological test, balanced thr):
+[12:52:55]                   precision    recall  f1-score   support
+[12:52:55]     
+[12:52:55]                0       0.94      0.90      0.92      4456
+[12:52:55]                1       0.47      0.60      0.53       669
+[12:52:55]     
+[12:52:55]         accuracy                           0.86      5125
+[12:52:55]        macro avg       0.70      0.75      0.72      5125
+[12:52:55]     weighted avg       0.88      0.86      0.87      5125
+[12:52:55]   Confusion matrix [[TN, FP], [FN, TP]]: [[4002, 454], [267, 402]]
+[12:52:55]   Mode=balanced     thr=0.675  p=0.470  r=0.601  f1=0.527  fpr=0.102  warnings=856
+[12:52:55]   Mode=high_recall  thr=0.250  p=0.223  r=0.925  f1=0.360  fpr=0.483  warnings=2770
+[12:52:55]   Mode=low_noise    thr=0.675  p=0.470  r=0.601  f1=0.527  fpr=0.102  warnings=856
+[12:52:58] 
+change_aware_hist_gb_weighted
+[12:52:58]   Features: 54  |  Train time: 2.3s
+[12:52:58]   Val thresholds -- balanced=0.650  high_recall=0.225  low_noise=0.650
+[12:52:58]   accuracy              : 0.8570
+[12:52:58]   precision             : 0.4631
+[12:52:58]   recall                : 0.6009
+[12:52:58]   f1                    : 0.5231
+[12:52:58]   fpr                   : 0.1046
+[12:52:58]   roc_auc               : 0.8630
+[12:52:58]   average_precision     : 0.5708
+[12:52:58]   brier                 : 0.1359
+[12:52:58]   Warnings: 868  TP=402  FP=466  TN=3990  FN=267
+[12:52:58]   Classification report (per-repo chronological test, balanced thr):
+[12:52:58]                   precision    recall  f1-score   support
+[12:52:58]     
+[12:52:58]                0       0.94      0.90      0.92      4456
+[12:52:58]                1       0.46      0.60      0.52       669
+[12:52:58]     
+[12:52:58]         accuracy                           0.86      5125
+[12:52:58]        macro avg       0.70      0.75      0.72      5125
+[12:52:58]     weighted avg       0.88      0.86      0.86      5125
+[12:52:58]   Confusion matrix [[TN, FP], [FN, TP]]: [[3990, 466], [267, 402]]
+[12:52:58]   Mode=balanced     thr=0.650  p=0.463  r=0.601  f1=0.523  fpr=0.105  warnings=868
+[12:52:58]   Mode=high_recall  thr=0.225  p=0.225  r=0.936  f1=0.362  fpr=0.485  warnings=2787
+[12:52:58]   Mode=low_noise    thr=0.650  p=0.463  r=0.601  f1=0.523  fpr=0.105  warnings=868
+[12:53:00] 
+change_aware_rf_balanced
+[12:53:00]   Features: 54  |  Train time: 1.9s
+[12:53:00]   Val thresholds -- balanced=0.550  high_recall=0.225  low_noise=0.575
+[12:53:00]   accuracy              : 0.8566
+[12:53:00]   precision             : 0.4611
+[12:53:00]   recall                : 0.5845
+[12:53:00]   f1                    : 0.5155
+[12:53:00]   fpr                   : 0.1026
+[12:53:00]   roc_auc               : 0.8544
+[12:53:00]   average_precision     : 0.5348
+[12:53:00]   brier                 : 0.1190
+[12:53:00]   Warnings: 848  TP=391  FP=457  TN=3999  FN=278
+[12:53:00]   Classification report (per-repo chronological test, balanced thr):
+[12:53:00]                   precision    recall  f1-score   support
+[12:53:00]     
+[12:53:00]                0       0.94      0.90      0.92      4456
+[12:53:00]                1       0.46      0.58      0.52       669
+[12:53:00]     
+[12:53:00]         accuracy                           0.86      5125
+[12:53:00]        macro avg       0.70      0.74      0.72      5125
+[12:53:00]     weighted avg       0.87      0.86      0.86      5125
+[12:53:00]   Confusion matrix [[TN, FP], [FN, TP]]: [[3999, 457], [278, 391]]
+[12:53:00]   Mode=balanced     thr=0.550  p=0.461  r=0.584  f1=0.515  fpr=0.103  warnings=848
+[12:53:00]   Mode=high_recall  thr=0.225  p=0.228  r=0.931  f1=0.366  fpr=0.474  warnings=2736
+[12:53:00]   Mode=low_noise    thr=0.575  p=0.487  r=0.553  f1=0.518  fpr=0.087  warnings=759
+[12:53:01] 
+logistic_change_aware_baseline
+[12:53:01]   Features: 54  |  Train time: 0.1s
+[12:53:01]   Val thresholds -- balanced=0.650  high_recall=0.275  low_noise=0.675
+[12:53:01]   accuracy              : 0.8570
+[12:53:01]   precision             : 0.4639
+[12:53:01]   recall                : 0.6143
+[12:53:01]   f1                    : 0.5286
+[12:53:01]   fpr                   : 0.1066
+[12:53:01]   roc_auc               : 0.8493
+[12:53:01]   average_precision     : 0.5235
+[12:53:01]   brier                 : 0.1542
+[12:53:01]   Warnings: 886  TP=411  FP=475  TN=3981  FN=258
+[12:53:01]   Classification report (per-repo chronological test, balanced thr):
+[12:53:01]                   precision    recall  f1-score   support
+[12:53:01]     
+[12:53:01]                0       0.94      0.89      0.92      4456
+[12:53:01]                1       0.46      0.61      0.53       669
+[12:53:01]     
+[12:53:01]         accuracy                           0.86      5125
+[12:53:01]        macro avg       0.70      0.75      0.72      5125
+[12:53:01]     weighted avg       0.88      0.86      0.87      5125
+[12:53:01]   Confusion matrix [[TN, FP], [FN, TP]]: [[3981, 475], [258, 411]]
+[12:53:01]   Mode=balanced     thr=0.650  p=0.464  r=0.614  f1=0.529  fpr=0.107  warnings=886
+[12:53:01]   Mode=high_recall  thr=0.275  p=0.223  r=0.901  f1=0.357  fpr=0.472  warnings=2705
+[12:53:01]   Mode=low_noise    thr=0.675  p=0.482  r=0.584  f1=0.528  fpr=0.094  warnings=811
+[12:53:02] 
+change_aware_hist_gb_v2
+[12:53:02]   Features: 54  |  Train time: 0.9s
+[12:53:02]   Val thresholds -- balanced=0.625  high_recall=0.225  low_noise=0.700
+[12:53:02]   accuracy              : 0.8515
+[12:53:02]   precision             : 0.4516
+[12:53:02]   recall                : 0.6413
+[12:53:02]   f1                    : 0.5300
+[12:53:02]   fpr                   : 0.1169
+[12:53:02]   roc_auc               : 0.8641
+[12:53:02]   average_precision     : 0.5659
+[12:53:02]   brier                 : 0.1372
+[12:53:02]   Warnings: 950  TP=429  FP=521  TN=3935  FN=240
+[12:53:02]   Classification report (per-repo chronological test, balanced thr):
+[12:53:02]                   precision    recall  f1-score   support
+[12:53:02]     
+[12:53:02]                0       0.94      0.88      0.91      4456
+[12:53:02]                1       0.45      0.64      0.53       669
+[12:53:02]     
+[12:53:02]         accuracy                           0.85      5125
+[12:53:02]        macro avg       0.70      0.76      0.72      5125
+[12:53:02]     weighted avg       0.88      0.85      0.86      5125
+[12:53:02]   Confusion matrix [[TN, FP], [FN, TP]]: [[3935, 521], [240, 429]]
+[12:53:02]   Mode=balanced     thr=0.625  p=0.452  r=0.641  f1=0.530  fpr=0.117  warnings=950
+[12:53:02]   Mode=high_recall  thr=0.225  p=0.218  r=0.939  f1=0.354  fpr=0.506  warnings=2881
+[12:53:02]   Mode=low_noise    thr=0.700  p=0.501  r=0.550  f1=0.525  fpr=0.082  warnings=734
+[12:53:19] 
+change_aware_voting_ensemble
+[12:53:19]   Features: 54  |  Train time: 17.1s
+[12:53:19]   Val thresholds -- balanced=0.600  high_recall=0.225  low_noise=0.625
+[12:53:19]   accuracy              : 0.8521
+[12:53:19]   precision             : 0.4519
+[12:53:19]   recall                : 0.6248
+[12:53:19]   f1                    : 0.5245
+[12:53:19]   fpr                   : 0.1138
+[12:53:19]   roc_auc               : 0.8626
+[12:53:19]   average_precision     : 0.5662
+[12:53:19]   brier                 : 0.1317
+[12:53:19]   Warnings: 925  TP=418  FP=507  TN=3949  FN=251
+[12:53:19]   Classification report (per-repo chronological test, balanced thr):
+[12:53:19]                   precision    recall  f1-score   support
+[12:53:19]     
+[12:53:19]                0       0.94      0.89      0.91      4456
+[12:53:19]                1       0.45      0.62      0.52       669
+[12:53:19]     
+[12:53:19]         accuracy                           0.85      5125
+[12:53:19]        macro avg       0.70      0.76      0.72      5125
+[12:53:19]     weighted avg       0.88      0.85      0.86      5125
+[12:53:19]   Confusion matrix [[TN, FP], [FN, TP]]: [[3949, 507], [251, 418]]
+[12:53:19]   Mode=balanced     thr=0.600  p=0.452  r=0.625  f1=0.524  fpr=0.114  warnings=925
+[12:53:19]   Mode=high_recall  thr=0.225  p=0.220  r=0.937  f1=0.356  fpr=0.499  warnings=2849
+[12:53:19]   Mode=low_noise    thr=0.625  p=0.473  r=0.596  f1=0.527  fpr=0.100  warnings=844
+[12:53:21] 
+change_aware_calibrated_hist_gb
+[12:53:21]   Features: 54  |  Train time: 1.6s
+[12:53:21]   Val thresholds -- balanced=0.650  high_recall=0.300  low_noise=0.675
+[12:53:21]   accuracy              : 0.8513
+[12:53:21]   precision             : 0.4499
+[12:53:21]   recall                : 0.6248
+[12:53:21]   f1                    : 0.5232
+[12:53:21]   fpr                   : 0.1147
+[12:53:21]   roc_auc               : 0.8618
+[12:53:21]   average_precision     : 0.5697
+[12:53:21]   brier                 : 0.1568
+[12:53:21]   Warnings: 929  TP=418  FP=511  TN=3945  FN=251
+[12:53:21]   Classification report (per-repo chronological test, balanced thr):
+[12:53:21]                   precision    recall  f1-score   support
+[12:53:21]     
+[12:53:21]                0       0.94      0.89      0.91      4456
+[12:53:21]                1       0.45      0.62      0.52       669
+[12:53:21]     
+[12:53:21]         accuracy                           0.85      5125
+[12:53:21]        macro avg       0.70      0.76      0.72      5125
+[12:53:21]     weighted avg       0.88      0.85      0.86      5125
+[12:53:21]   Confusion matrix [[TN, FP], [FN, TP]]: [[3945, 511], [251, 418]]
+[12:53:21]   Mode=balanced     thr=0.650  p=0.450  r=0.625  f1=0.523  fpr=0.115  warnings=929
+[12:53:21]   Mode=high_recall  thr=0.300  p=0.226  r=0.937  f1=0.364  fpr=0.483  warnings=2779
+[12:53:21]   Mode=low_noise    thr=0.675  p=0.468  r=0.607  f1=0.528  fpr=0.104  warnings=868
+[12:53:23] 
+change_aware_hist_gb_v3_monotone
+[12:53:23]   Features: 54  |  Train time: 1.0s
+[12:53:23]   Val thresholds -- balanced=0.650  high_recall=0.225  low_noise=0.675
+[12:53:23]   accuracy              : 0.8521
+[12:53:23]   precision             : 0.4516
+[12:53:23]   recall                : 0.6203
+[12:53:23]   f1                    : 0.5227
+[12:53:23]   fpr                   : 0.1131
+[12:53:23]   roc_auc               : 0.8618
+[12:53:23]   average_precision     : 0.5715
+[12:53:23]   brier                 : 0.1384
+[12:53:23]   Warnings: 919  TP=415  FP=504  TN=3952  FN=254
+[12:53:23]   Classification report (per-repo chronological test, balanced thr):
+[12:53:23]                   precision    recall  f1-score   support
+[12:53:23]     
+[12:53:23]                0       0.94      0.89      0.91      4456
+[12:53:23]                1       0.45      0.62      0.52       669
+[12:53:23]     
+[12:53:23]         accuracy                           0.85      5125
+[12:53:23]        macro avg       0.70      0.75      0.72      5125
+[12:53:23]     weighted avg       0.88      0.85      0.86      5125
+[12:53:23]   Confusion matrix [[TN, FP], [FN, TP]]: [[3952, 504], [254, 415]]
+[12:53:23]   Mode=balanced     thr=0.650  p=0.452  r=0.620  f1=0.523  fpr=0.113  warnings=919
+[12:53:23]   Mode=high_recall  thr=0.225  p=0.220  r=0.933  f1=0.356  fpr=0.496  warnings=2835
+[12:53:23]   Mode=low_noise    thr=0.675  p=0.475  r=0.589  f1=0.526  fpr=0.098  warnings=829
+[12:53:26] 
+change_aware_calibrated_hist_gb_sigmoid
+[12:53:26]   Features: 54  |  Train time: 2.5s
+[12:53:26]   Val thresholds -- balanced=0.700  high_recall=0.300  low_noise=0.700
+[12:53:26]   accuracy              : 0.8669
+[12:53:26]   precision             : 0.4914
+[12:53:26]   recall                : 0.5575
+[12:53:26]   f1                    : 0.5224
+[12:53:26]   fpr                   : 0.0866
+[12:53:26]   roc_auc               : 0.8619
+[12:53:26]   average_precision     : 0.5730
+[12:53:26]   brier                 : 0.1583
+[12:53:26]   Warnings: 759  TP=373  FP=386  TN=4070  FN=296
+[12:53:26]   Classification report (per-repo chronological test, balanced thr):
+[12:53:26]                   precision    recall  f1-score   support
+[12:53:26]     
+[12:53:26]                0       0.93      0.91      0.92      4456
+[12:53:26]                1       0.49      0.56      0.52       669
+[12:53:26]     
+[12:53:26]         accuracy                           0.87      5125
+[12:53:26]        macro avg       0.71      0.74      0.72      5125
+[12:53:26]     weighted avg       0.87      0.87      0.87      5125
+[12:53:26]   Confusion matrix [[TN, FP], [FN, TP]]: [[4070, 386], [296, 373]]
+[12:53:26]   Mode=balanced     thr=0.700  p=0.491  r=0.558  f1=0.522  fpr=0.087  warnings=759
+[12:53:26]   Mode=high_recall  thr=0.300  p=0.225  r=0.927  f1=0.362  fpr=0.480  warnings=2759
+[12:53:26]   Mode=low_noise    thr=0.700  p=0.491  r=0.558  f1=0.522  fpr=0.087  warnings=759
+[12:54:07] 
+change_aware_stacking
+[12:54:07]   Features: 54  |  Train time: 40.8s
+[12:54:07]   Val thresholds -- balanced=0.675  high_recall=0.300  low_noise=0.700
+[12:54:07]   accuracy              : 0.8519
+[12:54:07]   precision             : 0.4512
+[12:54:07]   recall                : 0.6218
+[12:54:07]   f1                    : 0.5229
+[12:54:07]   fpr                   : 0.1136
+[12:54:07]   roc_auc               : 0.8605
+[12:54:07]   average_precision     : 0.5668
+[12:54:07]   brier                 : 0.1613
+[12:54:07]   Warnings: 922  TP=416  FP=506  TN=3950  FN=253
+[12:54:07]   Classification report (per-repo chronological test, balanced thr):
+[12:54:07]                   precision    recall  f1-score   support
+[12:54:07]     
+[12:54:07]                0       0.94      0.89      0.91      4456
+[12:54:07]                1       0.45      0.62      0.52       669
+[12:54:07]     
+[12:54:07]         accuracy                           0.85      5125
+[12:54:07]        macro avg       0.70      0.75      0.72      5125
+[12:54:07]     weighted avg       0.88      0.85      0.86      5125
+[12:54:07]   Confusion matrix [[TN, FP], [FN, TP]]: [[3950, 506], [253, 416]]
+[12:54:07]   Mode=balanced     thr=0.675  p=0.451  r=0.622  f1=0.523  fpr=0.114  warnings=922
+[12:54:07]   Mode=high_recall  thr=0.300  p=0.232  r=0.916  f1=0.370  fpr=0.455  warnings=2641
+[12:54:07]   Mode=low_noise    thr=0.700  p=0.479  r=0.595  f1=0.531  fpr=0.097  warnings=831
+[12:54:29] 
+change_aware_plus_m13_gb_weighted
+[12:54:29]   Features: 64  |  Train time: 22.0s
+[12:54:29]   Val thresholds -- balanced=0.725  high_recall=0.250  low_noise=0.725
+[12:54:29]   accuracy              : 0.8743
+[12:54:29]   precision             : 0.5178
+[12:54:29]   recall                : 0.5426
+[12:54:29]   f1                    : 0.5299
+[12:54:29]   fpr                   : 0.0759
+[12:54:29]   roc_auc               : 0.8596
+[12:54:29]   average_precision     : 0.5707
+[12:54:29]   brier                 : 0.1478
+[12:54:29]   Warnings: 701  TP=363  FP=338  TN=4118  FN=306
+[12:54:29]   Classification report (per-repo chronological test, balanced thr):
+[12:54:29]                   precision    recall  f1-score   support
+[12:54:29]     
+[12:54:29]                0       0.93      0.92      0.93      4456
+[12:54:29]                1       0.52      0.54      0.53       669
+[12:54:29]     
+[12:54:29]         accuracy                           0.87      5125
+[12:54:29]        macro avg       0.72      0.73      0.73      5125
+[12:54:29]     weighted avg       0.88      0.87      0.88      5125
+[12:54:29]   Confusion matrix [[TN, FP], [FN, TP]]: [[4118, 338], [306, 363]]
+[12:54:29]   Mode=balanced     thr=0.725  p=0.518  r=0.543  f1=0.530  fpr=0.076  warnings=701
+[12:54:29]   Mode=high_recall  thr=0.250  p=0.223  r=0.928  f1=0.360  fpr=0.486  warnings=2785
+[12:54:29]   Mode=low_noise    thr=0.725  p=0.518  r=0.543  f1=0.530  fpr=0.076  warnings=701
+[12:54:31] 
+change_aware_plus_m13_hist_gb
+[12:54:31]   Features: 64  |  Train time: 1.2s
+[12:54:31]   Val thresholds -- balanced=0.625  high_recall=0.225  low_noise=0.650
+[12:54:31]   accuracy              : 0.8505
+[12:54:31]   precision             : 0.4480
+[12:54:31]   recall                : 0.6248
+[12:54:31]   f1                    : 0.5218
+[12:54:31]   fpr                   : 0.1156
+[12:54:31]   roc_auc               : 0.8647
+[12:54:31]   average_precision     : 0.5714
+[12:54:31]   brier                 : 0.1352
+[12:54:31]   Warnings: 933  TP=418  FP=515  TN=3941  FN=251
+[12:54:31]   Classification report (per-repo chronological test, balanced thr):
+[12:54:31]                   precision    recall  f1-score   support
+[12:54:31]     
+[12:54:31]                0       0.94      0.88      0.91      4456
+[12:54:31]                1       0.45      0.62      0.52       669
+[12:54:31]     
+[12:54:31]         accuracy                           0.85      5125
+[12:54:31]        macro avg       0.69      0.75      0.72      5125
+[12:54:31]     weighted avg       0.88      0.85      0.86      5125
+[12:54:31]   Confusion matrix [[TN, FP], [FN, TP]]: [[3941, 515], [251, 418]]
+[12:54:31]   Mode=balanced     thr=0.625  p=0.448  r=0.625  f1=0.522  fpr=0.116  warnings=933
+[12:54:31]   Mode=high_recall  thr=0.225  p=0.223  r=0.940  f1=0.361  fpr=0.491  warnings=2816
+[12:54:31]   Mode=low_noise    thr=0.650  p=0.465  r=0.608  f1=0.527  fpr=0.105  warnings=876
+[12:54:31] 
+Model comparison:
+[12:54:31]                                    name  accuracy  precision   recall       f1      fpr  roc_auc  average_precision    brier  balanced_threshold  high_recall_threshold  low_noise_threshold
+               history_only_gb_weighted  0.779512   0.300778 0.520179 0.381161 0.181553 0.739620           0.354947 0.203871               0.650                  0.275                0.700
+               change_aware_gb_weighted  0.859317   0.469626 0.600897 0.527213 0.101885 0.859582           0.566182 0.147565               0.675                  0.250                0.675
+          change_aware_hist_gb_weighted  0.856976   0.463134 0.600897 0.523097 0.104578 0.863019           0.570786 0.135900               0.650                  0.225                0.650
+               change_aware_rf_balanced  0.856585   0.461085 0.584454 0.515491 0.102558 0.854428           0.534787 0.118977               0.550                  0.225                0.575
+         logistic_change_aware_baseline  0.856976   0.463883 0.614350 0.528617 0.106598 0.849289           0.523550 0.154215               0.650                  0.275                0.675
+                change_aware_hist_gb_v2  0.851512   0.451579 0.641256 0.529957 0.116921 0.864146           0.565938 0.137235               0.625                  0.225                0.700
+           change_aware_voting_ensemble  0.852098   0.451892 0.624813 0.524467 0.113779 0.862584           0.566206 0.131746               0.600                  0.225                0.625
+        change_aware_calibrated_hist_gb  0.851317   0.449946 0.624813 0.523154 0.114677 0.861771           0.569667 0.156763               0.650                  0.300                0.675
+       change_aware_hist_gb_v3_monotone  0.852098   0.451578 0.620329 0.522670 0.113106 0.861824           0.571523 0.138367               0.650                  0.225                0.675
+change_aware_calibrated_hist_gb_sigmoid  0.866927   0.491436 0.557549 0.522409 0.086625 0.861907           0.573022 0.158295               0.700                  0.300                0.700
+                  change_aware_stacking  0.851902   0.451193 0.621824 0.522942 0.113555 0.860505           0.566771 0.161299               0.675                  0.300                0.700
+      change_aware_plus_m13_gb_weighted  0.874341   0.517832 0.542601 0.529927 0.075853 0.859587           0.570692 0.147831               0.725                  0.250                0.725
+          change_aware_plus_m13_hist_gb  0.850537   0.448017 0.624813 0.521848 0.115575 0.864743           0.571431 0.135218               0.625                  0.225                0.650
+[12:54:31] Saved comparison   : m14_model_comparison.csv
+[12:54:31] 
+Selected model:
+[12:54:31]   name           : change_aware_calibrated_hist_gb_sigmoid
+[12:54:31]   selection rule : AP -> ROC-AUC -> lower Brier -> F1
+[12:54:31]   balanced thr   : 0.700
+[12:54:31]   high_recall thr: 0.300
+[12:54:31]   low_noise thr  : 0.700
+[12:54:31] Feature importance : placeholder saved (model type has no feature_importances_)
+[12:54:31] 
+Permutation importance uses test-set ROC-AUC as the scoring metric.
+This is more reliable than MDI for correlated features.
+[12:54:31] 
+Computing permutation importance on test set (30 repeats)...
+[12:55:47] Permutation importance saved: m14_permutation_importance.csv
+[12:55:47] Top 15 features (permutation):
+[12:55:47]   same_workflow_failure_rate                         +0.16497 ± 0.00501
+[12:55:47]   repo_base_failure_rate                             +0.02897 ± 0.00388
+[12:55:47]   workflow_name_has_test                             +0.01411 ± 0.00236
+[12:55:47]   log1p_hours_since_last_run                         +0.00863 ± 0.00148
+[12:55:47]   event_pull_request                                 +0.00484 ± 0.00153
+[12:55:47]   workflow_name_has_build                            +0.00430 ± 0.00088
+[12:55:47]   n_workflows_in_window                              +0.00260 ± 0.00055
+[12:55:47]   trend_failure_rate                                 +0.00216 ± 0.00057
+[12:55:47]   is_main_branch                                     +0.00169 ± 0.00081
+[12:55:47]   long_consecutive_successes                         +0.00160 ± 0.00142
+[12:55:47]   event_push                                         +0.00149 ± 0.00051
+[12:55:47]   event_schedule                                     +0.00143 ± 0.00034
+[12:55:47]   churn_vs_recent_mean                               +0.00138 ± 0.00106
+[12:55:47]   log_total_churn                                    +0.00131 ± 0.00053
+[12:55:47]   day_of_week                                        +0.00123 ± 0.00053
+[12:55:47] PR curve saved     : m14_pr_curve.csv
+[12:55:47] Calibration curve  : m14_calibration_curve.csv
+[12:55:47] Calibration (mean predicted vs fraction positives):
+[12:55:47]   predicted=0.088  actual=0.004
+[12:55:47]   predicted=0.150  actual=0.015
+[12:55:47]   predicted=0.247  actual=0.031
+[12:55:47]   predicted=0.346  actual=0.054
+[12:55:47]   predicted=0.448  actual=0.103
+[12:55:47]   predicted=0.551  actual=0.169
+[12:55:47]   predicted=0.651  actual=0.264
+[12:55:47]   predicted=0.753  actual=0.311
+[12:55:47]   predicted=0.846  actual=0.514
+[12:55:47]   predicted=0.926  actual=0.854
+[12:55:47] Per-repo metrics   : m14_per_repo_metrics.csv
+[12:55:47]   Repos with computable AUC: 78  median=0.786  Q25=0.700
+[12:55:47]   5 weakest repos (by ROC-AUC):
+[12:55:47]     apache/commons-math                      auc=0.219  n=59  fail_rate=0.034
+[12:55:47]     wtforms/wtforms                          auc=0.250  n=9  fail_rate=0.111
+[12:55:47]     apache/commons-configuration             auc=0.328  n=59  fail_rate=0.017
+[12:55:47]     mapstruct/mapstruct                      auc=0.391  n=59  fail_rate=0.153
+[12:55:47]     buildpacks/pack                          auc=0.445  n=59  fail_rate=0.068
+[12:55:47] shap not installed — skipping SHAP summary.  Install with: pip install shap
+[12:55:47] 
+Saved outputs:
+[12:55:47]   model                : m14_model.pkl
+[12:55:47]   config               : m14_config.pkl
+[12:55:47]   thresholds           : m14_thresholds.csv
+[12:55:47]   predictions          : m14_test_predictions.csv
+[12:55:47]   feature importance   : m14_feature_importance.csv
+[12:55:47]   permutation imp.     : m14_permutation_importance.csv
+[12:55:47]   PR curve             : m14_pr_curve.csv
+[12:55:47]   calibration curve    : m14_calibration_curve.csv
+[12:55:47]   per-repo metrics     : m14_per_repo_metrics.csv
+[12:55:47]   training windows     : m14_training_windows.csv
+[12:55:47]   report               : m14_report.txt
+[12:55:47] 
+Finished : 2026-05-03T12:55:47.794944+00:00
+[12:55:47] ==============================================================================

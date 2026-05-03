@@ -1,0 +1,6 @@
+,pred:compilation,pred:configuration,pred:flaky_test,pred:infrastructure,pred:test_failure
+act:compilation,734,19,0,3,130
+act:configuration,70,534,4,5,62
+act:flaky_test,0,0,381,0,2
+act:infrastructure,20,6,0,553,21
+act:test_failure,38,12,1,13,1767
